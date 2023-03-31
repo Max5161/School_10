@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище School10Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Klassi">
+          <Key>
+            <PropertyRef Name="ID_Klassa" />
+          </Key>
+          <Property Name="ID_Klassa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="god_nach" Type="date" />
+          <Property Name="god_Obuch" Type="date" />
+          <Property Name="Bukva" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Rukovoditel_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Predmeti">
+          <Key>
+            <PropertyRef Name="ID_Predmeta" />
+          </Key>
+          <Property Name="ID_Predmeta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="ID_Teacher" />
+          </Key>
+          <Property Name="ID_Teacher" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Familia" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pr_Primechania" Type="nvarchar" MaxLength="50" />
+          <Property Name="User_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Ucheniki">
+          <Key>
+            <PropertyRef Name="Uchenik_ID" />
+          </Key>
+          <Property Name="Uchenik_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Klass_ID" Type="int" Nullable="false" />
+          <Property Name="Familia" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date_rojden" Type="date" />
+          <Property Name="Date_Postuplen" Type="date" />
+          <Property Name="Primechania" Type="nvarchar" MaxLength="50" />
+          <Property Name="Roditeli" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="User_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Uroki">
+          <Key>
+            <PropertyRef Name="ID_Uroka" />
+          </Key>
+          <Property Name="ID_Uroka" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Teacher_ID" Type="int" Nullable="false" />
+          <Property Name="Predmet_ID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Klass_ID" Type="int" Nullable="false" />
+          <Property Name="Thema" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Home_work" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Uroki_Ucheniki">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uroki_ID" Type="int" Nullable="false" />
+          <Property Name="Uchenik_ID" Type="int" Nullable="false" />
+          <Property Name="Ocenka" Type="nvarchar" MaxLength="50" />
+          <Property Name="Primechanie" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Klassi_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Klassi" Type="Self.Klassi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="ID_Teacher" />
+            </Principal>
+            <Dependent Role="Klassi">
+              <PropertyRef Name="Rukovoditel_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ucheniki_Klassi">
+          <End Role="Klassi" Type="Self.Klassi" Multiplicity="1" />
+          <End Role="Ucheniki" Type="Self.Ucheniki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klassi">
+              <PropertyRef Name="ID_Klassa" />
+            </Principal>
+            <Dependent Role="Ucheniki">
+              <PropertyRef Name="Klass_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uroki_Klassi">
+          <End Role="Klassi" Type="Self.Klassi" Multiplicity="1" />
+          <End Role="Uroki" Type="Self.Uroki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klassi">
+              <PropertyRef Name="ID_Klassa" />
+            </Principal>
+            <Dependent Role="Uroki">
+              <PropertyRef Name="Klass_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uroki_Predmeti">
+          <End Role="Predmeti" Type="Self.Predmeti" Multiplicity="1" />
+          <End Role="Uroki" Type="Self.Uroki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Predmeti">
+              <PropertyRef Name="ID_Predmeta" />
+            </Principal>
+            <Dependent Role="Uroki">
+              <PropertyRef Name="Predmet_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uroki_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Uroki" Type="Self.Uroki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="ID_Teacher" />
+            </Principal>
+            <Dependent Role="Uroki">
+              <PropertyRef Name="Teacher_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uroki_Ucheniki_Ucheniki">
+          <End Role="Ucheniki" Type="Self.Ucheniki" Multiplicity="1" />
+          <End Role="Uroki_Ucheniki" Type="Self.Uroki_Ucheniki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ucheniki">
+              <PropertyRef Name="Uchenik_ID" />
+            </Principal>
+            <Dependent Role="Uroki_Ucheniki">
+              <PropertyRef Name="Uchenik_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uroki_Ucheniki_Uroki">
+          <End Role="Uroki" Type="Self.Uroki" Multiplicity="1" />
+          <End Role="Uroki_Ucheniki" Type="Self.Uroki_Ucheniki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uroki">
+              <PropertyRef Name="ID_Uroka" />
+            </Principal>
+            <Dependent Role="Uroki_Ucheniki">
+              <PropertyRef Name="Uroki_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище School10ModelContainer">
+          <EntitySet Name="Klassi" EntityType="Self.Klassi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Predmeti" EntityType="Self.Predmeti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ucheniki" EntityType="Self.Ucheniki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uroki" EntityType="Self.Uroki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uroki_Ucheniki" EntityType="Self.Uroki_Ucheniki" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Klassi_Teacher" Association="Self.FK_Klassi_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Klassi" EntitySet="Klassi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ucheniki_Klassi" Association="Self.FK_Ucheniki_Klassi">
+            <End Role="Klassi" EntitySet="Klassi" />
+            <End Role="Ucheniki" EntitySet="Ucheniki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Klassi" Association="Self.FK_Uroki_Klassi">
+            <End Role="Klassi" EntitySet="Klassi" />
+            <End Role="Uroki" EntitySet="Uroki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Predmeti" Association="Self.FK_Uroki_Predmeti">
+            <End Role="Predmeti" EntitySet="Predmeti" />
+            <End Role="Uroki" EntitySet="Uroki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Teacher" Association="Self.FK_Uroki_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Uroki" EntitySet="Uroki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Ucheniki_Ucheniki" Association="Self.FK_Uroki_Ucheniki_Ucheniki">
+            <End Role="Ucheniki" EntitySet="Ucheniki" />
+            <End Role="Uroki_Ucheniki" EntitySet="Uroki_Ucheniki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Ucheniki_Uroki" Association="Self.FK_Uroki_Ucheniki_Uroki">
+            <End Role="Uroki" EntitySet="Uroki" />
+            <End Role="Uroki_Ucheniki" EntitySet="Uroki_Ucheniki" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="School10Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Klassi">
+          <Key>
+            <PropertyRef Name="ID_Klassa" />
+          </Key>
+          <Property Name="ID_Klassa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="god_nach" Type="DateTime" Precision="0" />
+          <Property Name="god_Obuch" Type="DateTime" Precision="0" />
+          <Property Name="Bukva" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rukovoditel_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Klassi_Teacher" FromRole="Klassi" ToRole="Teacher" />
+          <NavigationProperty Name="Uchenikis" Relationship="Self.FK_Ucheniki_Klassi" FromRole="Klassi" ToRole="Ucheniki" />
+          <NavigationProperty Name="Urokis" Relationship="Self.FK_Uroki_Klassi" FromRole="Klassi" ToRole="Uroki" />
+        </EntityType>
+        <EntityType Name="Predmeti">
+          <Key>
+            <PropertyRef Name="ID_Predmeta" />
+          </Key>
+          <Property Name="ID_Predmeta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Urokis" Relationship="Self.FK_Uroki_Predmeti" FromRole="Predmeti" ToRole="Uroki" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="ID_Teacher" />
+          </Key>
+          <Property Name="ID_Teacher" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Familia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pr_Primechania" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Klassis" Relationship="Self.FK_Klassi_Teacher" FromRole="Teacher" ToRole="Klassi" />
+          <NavigationProperty Name="Urokis" Relationship="Self.FK_Uroki_Teacher" FromRole="Teacher" ToRole="Uroki" />
+          <Property Name="User_ID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Ucheniki">
+          <Key>
+            <PropertyRef Name="Uchenik_ID" />
+          </Key>
+          <Property Name="Uchenik_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Klass_ID" Type="Int32" Nullable="false" />
+          <Property Name="Familia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date_rojden" Type="DateTime" Precision="0" />
+          <Property Name="Date_Postuplen" Type="DateTime" Precision="0" />
+          <Property Name="Primechania" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Roditeli" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Klassi" Relationship="Self.FK_Ucheniki_Klassi" FromRole="Ucheniki" ToRole="Klassi" />
+          <NavigationProperty Name="Uroki_Ucheniki" Relationship="Self.FK_Uroki_Ucheniki_Ucheniki" FromRole="Ucheniki" ToRole="Uroki_Ucheniki" />
+          <Property Name="User_ID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Uroki">
+          <Key>
+            <PropertyRef Name="ID_Uroka" />
+          </Key>
+          <Property Name="ID_Uroka" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Teacher_ID" Type="Int32" Nullable="false" />
+          <Property Name="Predmet_ID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Klass_ID" Type="Int32" Nullable="false" />
+          <Property Name="Thema" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Home_work" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Klassi" Relationship="Self.FK_Uroki_Klassi" FromRole="Uroki" ToRole="Klassi" />
+          <NavigationProperty Name="Predmeti" Relationship="Self.FK_Uroki_Predmeti" FromRole="Uroki" ToRole="Predmeti" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Uroki_Teacher" FromRole="Uroki" ToRole="Teacher" />
+          <NavigationProperty Name="Uroki_Ucheniki" Relationship="Self.FK_Uroki_Ucheniki_Uroki" FromRole="Uroki" ToRole="Uroki_Ucheniki" />
+        </EntityType>
+        <EntityType Name="Uroki_Ucheniki">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uroki_ID" Type="Int32" Nullable="false" />
+          <Property Name="Uchenik_ID" Type="Int32" Nullable="false" />
+          <Property Name="Ocenka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Primechanie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ucheniki" Relationship="Self.FK_Uroki_Ucheniki_Ucheniki" FromRole="Uroki_Ucheniki" ToRole="Ucheniki" />
+          <NavigationProperty Name="Uroki" Relationship="Self.FK_Uroki_Ucheniki_Uroki" FromRole="Uroki_Ucheniki" ToRole="Uroki" />
+        </EntityType>
+        <Association Name="FK_Klassi_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Klassi" Type="Self.Klassi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="ID_Teacher" />
+            </Principal>
+            <Dependent Role="Klassi">
+              <PropertyRef Name="Rukovoditel_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ucheniki_Klassi">
+          <End Role="Klassi" Type="Self.Klassi" Multiplicity="1" />
+          <End Role="Ucheniki" Type="Self.Ucheniki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klassi">
+              <PropertyRef Name="ID_Klassa" />
+            </Principal>
+            <Dependent Role="Ucheniki">
+              <PropertyRef Name="Klass_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uroki_Klassi">
+          <End Role="Klassi" Type="Self.Klassi" Multiplicity="1" />
+          <End Role="Uroki" Type="Self.Uroki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klassi">
+              <PropertyRef Name="ID_Klassa" />
+            </Principal>
+            <Dependent Role="Uroki">
+              <PropertyRef Name="Klass_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uroki_Predmeti">
+          <End Role="Predmeti" Type="Self.Predmeti" Multiplicity="1" />
+          <End Role="Uroki" Type="Self.Uroki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Predmeti">
+              <PropertyRef Name="ID_Predmeta" />
+            </Principal>
+            <Dependent Role="Uroki">
+              <PropertyRef Name="Predmet_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uroki_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Uroki" Type="Self.Uroki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="ID_Teacher" />
+            </Principal>
+            <Dependent Role="Uroki">
+              <PropertyRef Name="Teacher_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uroki_Ucheniki_Ucheniki">
+          <End Role="Ucheniki" Type="Self.Ucheniki" Multiplicity="1" />
+          <End Role="Uroki_Ucheniki" Type="Self.Uroki_Ucheniki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ucheniki">
+              <PropertyRef Name="Uchenik_ID" />
+            </Principal>
+            <Dependent Role="Uroki_Ucheniki">
+              <PropertyRef Name="Uchenik_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uroki_Ucheniki_Uroki">
+          <End Role="Uroki" Type="Self.Uroki" Multiplicity="1" />
+          <End Role="Uroki_Ucheniki" Type="Self.Uroki_Ucheniki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uroki">
+              <PropertyRef Name="ID_Uroka" />
+            </Principal>
+            <Dependent Role="Uroki_Ucheniki">
+              <PropertyRef Name="Uroki_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="School10Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Klassis" EntityType="Self.Klassi" />
+          <EntitySet Name="Predmetis" EntityType="Self.Predmeti" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <EntitySet Name="Uchenikis" EntityType="Self.Ucheniki" />
+          <EntitySet Name="Urokis" EntityType="Self.Uroki" />
+          <EntitySet Name="Uroki_Ucheniki" EntityType="Self.Uroki_Ucheniki" />
+          <AssociationSet Name="FK_Klassi_Teacher" Association="Self.FK_Klassi_Teacher">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Klassi" EntitySet="Klassis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ucheniki_Klassi" Association="Self.FK_Ucheniki_Klassi">
+            <End Role="Klassi" EntitySet="Klassis" />
+            <End Role="Ucheniki" EntitySet="Uchenikis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Klassi" Association="Self.FK_Uroki_Klassi">
+            <End Role="Klassi" EntitySet="Klassis" />
+            <End Role="Uroki" EntitySet="Urokis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Predmeti" Association="Self.FK_Uroki_Predmeti">
+            <End Role="Predmeti" EntitySet="Predmetis" />
+            <End Role="Uroki" EntitySet="Urokis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Teacher" Association="Self.FK_Uroki_Teacher">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Uroki" EntitySet="Urokis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Ucheniki_Ucheniki" Association="Self.FK_Uroki_Ucheniki_Ucheniki">
+            <End Role="Ucheniki" EntitySet="Uchenikis" />
+            <End Role="Uroki_Ucheniki" EntitySet="Uroki_Ucheniki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Ucheniki_Uroki" Association="Self.FK_Uroki_Ucheniki_Uroki">
+            <End Role="Uroki" EntitySet="Urokis" />
+            <End Role="Uroki_Ucheniki" EntitySet="Uroki_Ucheniki" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище School10ModelContainer" CdmEntityContainer="School10Entities">
+          <EntitySetMapping Name="Klassis">
+            <EntityTypeMapping TypeName="School10Model.Klassi">
+              <MappingFragment StoreEntitySet="Klassi">
+                <ScalarProperty Name="ID_Klassa" ColumnName="ID_Klassa" />
+                <ScalarProperty Name="god_nach" ColumnName="god_nach" />
+                <ScalarProperty Name="god_Obuch" ColumnName="god_Obuch" />
+                <ScalarProperty Name="Bukva" ColumnName="Bukva" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rukovoditel_ID" ColumnName="Rukovoditel_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Predmetis">
+            <EntityTypeMapping TypeName="School10Model.Predmeti">
+              <MappingFragment StoreEntitySet="Predmeti">
+                <ScalarProperty Name="ID_Predmeta" ColumnName="ID_Predmeta" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="School10Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="School10Model.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="ID_Teacher" ColumnName="ID_Teacher" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="Pr_Primechania" ColumnName="Pr_Primechania" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uchenikis">
+            <EntityTypeMapping TypeName="School10Model.Ucheniki">
+              <MappingFragment StoreEntitySet="Ucheniki">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Uchenik_ID" ColumnName="Uchenik_ID" />
+                <ScalarProperty Name="Klass_ID" ColumnName="Klass_ID" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="Date_rojden" ColumnName="Date_rojden" />
+                <ScalarProperty Name="Date_Postuplen" ColumnName="Date_Postuplen" />
+                <ScalarProperty Name="Primechania" ColumnName="Primechania" />
+                <ScalarProperty Name="Roditeli" ColumnName="Roditeli" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Urokis">
+            <EntityTypeMapping TypeName="School10Model.Uroki">
+              <MappingFragment StoreEntitySet="Uroki">
+                <ScalarProperty Name="ID_Uroka" ColumnName="ID_Uroka" />
+                <ScalarProperty Name="Teacher_ID" ColumnName="Teacher_ID" />
+                <ScalarProperty Name="Predmet_ID" ColumnName="Predmet_ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Klass_ID" ColumnName="Klass_ID" />
+                <ScalarProperty Name="Thema" ColumnName="Thema" />
+                <ScalarProperty Name="Home_work" ColumnName="Home_work" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uroki_Ucheniki">
+            <EntityTypeMapping TypeName="School10Model.Uroki_Ucheniki">
+              <MappingFragment StoreEntitySet="Uroki_Ucheniki">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Uroki_ID" ColumnName="Uroki_ID" />
+                <ScalarProperty Name="Uchenik_ID" ColumnName="Uchenik_ID" />
+                <ScalarProperty Name="Ocenka" ColumnName="Ocenka" />
+                <ScalarProperty Name="Primechanie" ColumnName="Primechanie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
