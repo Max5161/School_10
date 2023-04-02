@@ -32,6 +32,7 @@ namespace School_10.Entities
         public Nullable<int> User_ID { get; set; }
     
         public virtual Klassi Klassi { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Uroki_Ucheniki> Uroki_Ucheniki { get; set; }
     }

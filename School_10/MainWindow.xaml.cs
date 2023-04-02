@@ -24,7 +24,7 @@ namespace School_10
         public MainWindow()
         {
             InitializeComponent();
-            FrameMain.Navigate(new Pages.Ocenki());
+            FrameMain.Navigate(new Pages.Autorization());
         }
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)

@@ -27,10 +27,12 @@ namespace School_10.Entities
     
         public virtual DbSet<Klassi> Klassis { get; set; }
         public virtual DbSet<Predmeti> Predmetis { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }
         public virtual DbSet<Ucheniki> Uchenikis { get; set; }
         public virtual DbSet<Uroki> Urokis { get; set; }
         public virtual DbSet<Uroki_Ucheniki> Uroki_Ucheniki { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

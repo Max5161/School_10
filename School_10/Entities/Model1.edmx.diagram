@@ -4,19 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="457a25f8b6194b6182122d9ce6bdd288" Name="Diagram1" ZoomLevel="86">
-        <EntityTypeShape EntityType="School10Model.Klassi" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="School10Model.Predmeti" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="School10Model.sysdiagram" Width="1.5" PointX="7.75" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="School10Model.Teacher" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="School10Model.Ucheniki" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="School10Model.Uroki" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="School10Model.Uroki_Ucheniki" Width="1.5" PointX="7.5" PointY="5.125" IsExpanded="true" />
+      <Diagram DiagramId="8fd6351a57c5494399e4b8288eb78a94" Name="Diagram1">
+        <EntityTypeShape EntityType="School10Model.Klassi" Width="1.5" PointX="7.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="School10Model.Predmeti" Width="1.5" PointX="10.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="School10Model.Role" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="School10Model.sysdiagram" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="School10Model.Teacher" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="School10Model.Ucheniki" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="School10Model.Uroki" Width="1.5" PointX="12.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="School10Model.Uroki_Ucheniki" Width="1.5" PointX="15" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="School10Model.User" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
         <AssociationConnector Association="School10Model.FK_Klassi_Teacher" ManuallyRouted="false" />
         <AssociationConnector Association="School10Model.FK_Ucheniki_Klassi" ManuallyRouted="false" />
         <AssociationConnector Association="School10Model.FK_Uroki_Klassi" ManuallyRouted="false" />
         <AssociationConnector Association="School10Model.FK_Uroki_Predmeti" ManuallyRouted="false" />
+        <AssociationConnector Association="School10Model.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="School10Model.FK_Teacher_User" ManuallyRouted="false" />
         <AssociationConnector Association="School10Model.FK_Uroki_Teacher" ManuallyRouted="false" />
+        <AssociationConnector Association="School10Model.FK_Ucheniki_User" ManuallyRouted="false" />
         <AssociationConnector Association="School10Model.FK_Uroki_Ucheniki_Ucheniki" ManuallyRouted="false" />
         <AssociationConnector Association="School10Model.FK_Uroki_Ucheniki_Uroki" ManuallyRouted="false" />
       </Diagram>

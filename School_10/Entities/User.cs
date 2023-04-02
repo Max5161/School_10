@@ -12,26 +12,24 @@ namespace School_10.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Teacher
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Teacher()
+        public User()
         {
-            this.Klassis = new HashSet<Klassi>();
-            this.Urokis = new HashSet<Uroki>();
+            this.Teachers = new HashSet<Teacher>();
+            this.Uchenikis = new HashSet<Ucheniki>();
         }
     
-        public int ID_Teacher { get; set; }
-        public string Familia { get; set; }
-        public string Name { get; set; }
-        public string Otchestvo { get; set; }
-        public string Pr_Primechania { get; set; }
-        public Nullable<int> User_ID { get; set; }
+        public int User_ID { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public Nullable<int> Role_ID { get; set; }
     
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Klassi> Klassis { get; set; }
-        public virtual User User { get; set; }
+        public virtual ICollection<Teacher> Teachers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Uroki> Urokis { get; set; }
+        public virtual ICollection<Ucheniki> Uchenikis { get; set; }
     }
 }

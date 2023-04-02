@@ -27,6 +27,31 @@ namespace School_10.Pages
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
+            var User = App.Context.Users
+                .FirstOrDefault(p => p.Login == TBoxLogin.Text && p.Password == PBoxPassword.Password);
+            if (User != null)
+            {
+                switch (User.Role_ID)
+                {
+                    case 1:
+                        App.CurrentUser = User;
+                        NavigationService.Navigate(new VistavOcenki());
+                        break;
+                    case 2:
+                        App.CurrentUser = User;
+                        NavigationService.Navigate(new Ocenki());
+                        break;
+                    case 3:
+                        App.CurrentUser = User;
+                        NavigationService.Navigate(new Ocenki());
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пользователь с такими данными не найден.", "Ошибки",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 

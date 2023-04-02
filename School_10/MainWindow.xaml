@@ -16,6 +16,7 @@
             <Button Content="Назад" Name="BtnBack" Click="BtnBack_Click" Height="40" Style="{StaticResource Buttonstule}" Width="80" HorizontalAlignment="Right" Margin="10"/>
             <Image Source="Logo and icon\school_FILL0_wght400_GRAD0_opsz48.png" HorizontalAlignment="Left"></Image>
         </Grid>
+        <TextBlock Style="{StaticResource NeglavTextBlock}" Text="{Binding ElementName=FrameMain, Path=Content.Title}" HorizontalAlignment="Center"></TextBlock>
         <Frame x:Name="FrameMain" NavigationUIVisibility="Hidden" Grid.Row="1" />
         <Grid Grid.Row="3" Background="{StaticResource 1}"></Grid>
     </Grid>

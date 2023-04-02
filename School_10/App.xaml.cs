@@ -1,4 +1,5 @@
-﻿using System;
+﻿using School_10.Entities;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -15,5 +16,7 @@ namespace School_10
     {
         public static Entities.School10Entities Context
         { get; } = new Entities.School10Entities();
+
+        public static User CurrentUser { get; set; } = null;
     }
 }
