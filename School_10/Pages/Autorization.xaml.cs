@@ -34,16 +34,19 @@ namespace School_10.Pages
                 switch (User.Role_ID)
                 {
                     case 1:
+                        // Teacher
                         App.CurrentUser = User;
-                        NavigationService.Navigate(new VistavOcenki());
+                        NavigationService.Navigate(new SpisokUrokov(User));
                         break;
                     case 2:
+                        // Uchenik
                         App.CurrentUser = User;
                         NavigationService.Navigate(new Ocenki());
                         break;
                     case 3:
-                        App.CurrentUser = User;
-                        NavigationService.Navigate(new Ocenki());
+                        //Admin
+                        App.CurrentUser = User; 
+                        NavigationService.Navigate(new SpisokUrokov(User));
                         break;
                 }
             }
