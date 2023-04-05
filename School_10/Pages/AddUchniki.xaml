@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:School_10.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      d:DataContext="{d:DesignInstance {x:Type local:AddUchniki}}"
       Title="Добавление урока">
     <Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -32,7 +33,7 @@
                         <TextBox   Width="150" Height="30" x:Name="TboxThema" Margin="5" Text="{Binding Urok.Thema, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock   Height="30" Text="Домашнее задание" Margin="5" Style="{StaticResource TBStul}"/>
+                        <TextBlock  Height="30" Text="Домашнее задание" Margin="5" Style="{StaticResource TBStul}"/>
                     <TextBox   Width="150" Height="30" x:Name="TboxHomeWork" Margin="5" Text="{Binding Urok.Home_work, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel>

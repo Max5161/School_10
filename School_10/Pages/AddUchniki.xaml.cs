@@ -1,20 +1,10 @@
 ﻿using School_10.Entities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace School_10.Pages
 {
@@ -33,6 +23,7 @@ namespace School_10.Pages
         {
             InitializeComponent();
             DataContext = this;
+            Urok = new Uroki();
 
             Cbox_FIO_Teacher.ItemsSource = App.Context.Teachers.ToList();
             CboxIDPredmeta.ItemsSource = App.Context.Predmetis.ToList();
@@ -42,11 +33,14 @@ namespace School_10.Pages
 
         private void ButtonSaveUrok_Click(object sender, RoutedEventArgs e)
         {
-           using (var db = new School10Entities())
-            {
-                db.Urokis.Add(Urok);
-                db.SaveChanges();
-            }
+            //Urok.Teacher = (Teacher)Cbox_FIO_Teacher.SelectedValue;
+            //Urok.Predmeti = (Predmeti)CboxIDPredmeta.SelectedValue;
+            //Urok.Klassi = (Klassi)CboxIDKlassa.SelectedValue;
+            //Urok.Thema = TboxThema.Text;
+
+            App.Context.Urokis.Add(Urok);
+            App.Context.SaveChanges();
+
             NavigationService.GoBack();
         }
 
