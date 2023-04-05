@@ -29,7 +29,7 @@ namespace School_10.Entities
         public Nullable<System.DateTime> Date_Postuplen { get; set; }
         public string Primechania { get; set; }
         public string Roditeli { get; set; }
-        public Nullable<int> User_ID { get; set; }
+        public int User_ID { get; set; }
     
         public virtual Klassi Klassi { get; set; }
         public virtual User User { get; set; }

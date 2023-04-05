@@ -1,5 +1,5 @@
-﻿using School_10.Entities;
-using System;
+﻿using School_10.Commands;
+using School_10.Entities;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -89,8 +89,8 @@ namespace School_10.Pages
             OnPropertyChanged(prop);
             return true;
         }
-        #endregion
 
+        #endregion
 
     }
 }

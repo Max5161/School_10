@@ -63,8 +63,8 @@
           <Property Name="Date_rojden" Type="date" />
           <Property Name="Date_Postuplen" Type="date" />
           <Property Name="Primechania" Type="nvarchar" MaxLength="50" />
-          <Property Name="Roditeli" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="User_ID" Type="int" />
+          <Property Name="Roditeli" Type="nvarchar" MaxLength="50" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Uroki">
           <Key>
@@ -85,7 +85,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Uroki_ID" Type="int" Nullable="false" />
           <Property Name="Uchenik_ID" Type="int" Nullable="false" />
-          <Property Name="Ocenka" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ocenka" Type="char" MaxLength="1" />
           <Property Name="Primechanie" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="User">
@@ -134,7 +134,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Ucheniki_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Ucheniki" Type="Self.Ucheniki" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -272,6 +272,57 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="School10Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="School10Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Klassis" EntityType="School10Model.Klassi" />
+          <EntitySet Name="Predmetis" EntityType="School10Model.Predmeti" />
+          <EntitySet Name="Roles" EntityType="School10Model.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="School10Model.sysdiagram" />
+          <EntitySet Name="Teachers" EntityType="School10Model.Teacher" />
+          <EntitySet Name="Uchenikis" EntityType="School10Model.Ucheniki" />
+          <EntitySet Name="Urokis" EntityType="School10Model.Uroki" />
+          <EntitySet Name="Uroki_Ucheniki" EntityType="School10Model.Uroki_Ucheniki" />
+          <EntitySet Name="Users" EntityType="School10Model.User" />
+          <AssociationSet Name="FK_Klassi_Teacher" Association="School10Model.FK_Klassi_Teacher">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Klassi" EntitySet="Klassis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ucheniki_Klassi" Association="School10Model.FK_Ucheniki_Klassi">
+            <End Role="Klassi" EntitySet="Klassis" />
+            <End Role="Ucheniki" EntitySet="Uchenikis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Klassi" Association="School10Model.FK_Uroki_Klassi">
+            <End Role="Klassi" EntitySet="Klassis" />
+            <End Role="Uroki" EntitySet="Urokis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Predmeti" Association="School10Model.FK_Uroki_Predmeti">
+            <End Role="Predmeti" EntitySet="Predmetis" />
+            <End Role="Uroki" EntitySet="Urokis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="School10Model.FK_User_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_User" Association="School10Model.FK_Teacher_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Teacher" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Teacher" Association="School10Model.FK_Uroki_Teacher">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Uroki" EntitySet="Urokis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ucheniki_User" Association="School10Model.FK_Ucheniki_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Ucheniki" EntitySet="Uchenikis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Ucheniki_Ucheniki" Association="School10Model.FK_Uroki_Ucheniki_Ucheniki">
+            <End Role="Ucheniki" EntitySet="Uchenikis" />
+            <End Role="Uroki_Ucheniki" EntitySet="Uroki_Ucheniki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uroki_Ucheniki_Uroki" Association="School10Model.FK_Uroki_Ucheniki_Uroki">
+            <End Role="Uroki" EntitySet="Urokis" />
+            <End Role="Uroki_Ucheniki" EntitySet="Uroki_Ucheniki" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Klassi">
           <Key>
             <PropertyRef Name="ID_Klassa" />
@@ -279,12 +330,12 @@
           <Property Name="ID_Klassa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="god_nach" Type="DateTime" Precision="0" />
           <Property Name="god_Obuch" Type="DateTime" Precision="0" />
-          <Property Name="Bukva" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Bukva" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Rukovoditel_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Teacher" Relationship="Self.FK_Klassi_Teacher" FromRole="Klassi" ToRole="Teacher" />
-          <NavigationProperty Name="Uchenikis" Relationship="Self.FK_Ucheniki_Klassi" FromRole="Klassi" ToRole="Ucheniki" />
-          <NavigationProperty Name="Urokis" Relationship="Self.FK_Uroki_Klassi" FromRole="Klassi" ToRole="Uroki" />
+          <NavigationProperty Name="Teacher" Relationship="School10Model.FK_Klassi_Teacher" FromRole="Klassi" ToRole="Teacher" />
+          <NavigationProperty Name="Uchenikis" Relationship="School10Model.FK_Ucheniki_Klassi" FromRole="Klassi" ToRole="Ucheniki" />
+          <NavigationProperty Name="Urokis" Relationship="School10Model.FK_Uroki_Klassi" FromRole="Klassi" ToRole="Uroki" />
         </EntityType>
         <EntityType Name="Predmeti">
           <Key>
@@ -292,7 +343,7 @@
           </Key>
           <Property Name="ID_Predmeta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Urokis" Relationship="Self.FK_Uroki_Predmeti" FromRole="Predmeti" ToRole="Uroki" />
+          <NavigationProperty Name="Urokis" Relationship="School10Model.FK_Uroki_Predmeti" FromRole="Predmeti" ToRole="Uroki" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -300,13 +351,13 @@
           </Key>
           <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+          <NavigationProperty Name="Users" Relationship="School10Model.FK_User_Role" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="principal_id" Type="Int32" Nullable="false" />
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
@@ -317,14 +368,14 @@
             <PropertyRef Name="ID_Teacher" />
           </Key>
           <Property Name="ID_Teacher" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Familia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Familia" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Otchestvo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Pr_Primechania" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="User_ID" Type="Int32" />
-          <NavigationProperty Name="Klassis" Relationship="Self.FK_Klassi_Teacher" FromRole="Teacher" ToRole="Klassi" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Teacher_User" FromRole="Teacher" ToRole="User" />
-          <NavigationProperty Name="Urokis" Relationship="Self.FK_Uroki_Teacher" FromRole="Teacher" ToRole="Uroki" />
+          <NavigationProperty Name="Klassis" Relationship="School10Model.FK_Klassi_Teacher" FromRole="Teacher" ToRole="Klassi" />
+          <NavigationProperty Name="User" Relationship="School10Model.FK_Teacher_User" FromRole="Teacher" ToRole="User" />
+          <NavigationProperty Name="Urokis" Relationship="School10Model.FK_Uroki_Teacher" FromRole="Teacher" ToRole="Uroki" />
         </EntityType>
         <EntityType Name="Ucheniki">
           <Key>
@@ -332,17 +383,17 @@
           </Key>
           <Property Name="Uchenik_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Klass_ID" Type="Int32" Nullable="false" />
-          <Property Name="Familia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Familia" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Otchestvo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Date_rojden" Type="DateTime" Precision="0" />
           <Property Name="Date_Postuplen" Type="DateTime" Precision="0" />
           <Property Name="Primechania" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Roditeli" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="User_ID" Type="Int32" />
-          <NavigationProperty Name="Klassi" Relationship="Self.FK_Ucheniki_Klassi" FromRole="Ucheniki" ToRole="Klassi" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Ucheniki_User" FromRole="Ucheniki" ToRole="User" />
-          <NavigationProperty Name="Uroki_Ucheniki" Relationship="Self.FK_Uroki_Ucheniki_Ucheniki" FromRole="Ucheniki" ToRole="Uroki_Ucheniki" />
+          <Property Name="Roditeli" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Klassi" Relationship="School10Model.FK_Ucheniki_Klassi" FromRole="Ucheniki" ToRole="Klassi" />
+          <NavigationProperty Name="User" Relationship="School10Model.FK_Ucheniki_User" FromRole="Ucheniki" ToRole="User" />
+          <NavigationProperty Name="Uroki_Ucheniki" Relationship="School10Model.FK_Uroki_Ucheniki_Ucheniki" FromRole="Ucheniki" ToRole="Uroki_Ucheniki" />
         </EntityType>
         <EntityType Name="Uroki">
           <Key>
@@ -353,12 +404,12 @@
           <Property Name="Predmet_ID" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="Klass_ID" Type="Int32" Nullable="false" />
-          <Property Name="Thema" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Thema" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Home_work" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Klassi" Relationship="Self.FK_Uroki_Klassi" FromRole="Uroki" ToRole="Klassi" />
-          <NavigationProperty Name="Predmeti" Relationship="Self.FK_Uroki_Predmeti" FromRole="Uroki" ToRole="Predmeti" />
-          <NavigationProperty Name="Teacher" Relationship="Self.FK_Uroki_Teacher" FromRole="Uroki" ToRole="Teacher" />
-          <NavigationProperty Name="Uroki_Ucheniki" Relationship="Self.FK_Uroki_Ucheniki_Uroki" FromRole="Uroki" ToRole="Uroki_Ucheniki" />
+          <NavigationProperty Name="Klassi" Relationship="School10Model.FK_Uroki_Klassi" FromRole="Uroki" ToRole="Klassi" />
+          <NavigationProperty Name="Predmeti" Relationship="School10Model.FK_Uroki_Predmeti" FromRole="Uroki" ToRole="Predmeti" />
+          <NavigationProperty Name="Teacher" Relationship="School10Model.FK_Uroki_Teacher" FromRole="Uroki" ToRole="Teacher" />
+          <NavigationProperty Name="Uroki_Ucheniki" Relationship="School10Model.FK_Uroki_Ucheniki_Uroki" FromRole="Uroki" ToRole="Uroki_Ucheniki" />
         </EntityType>
         <EntityType Name="Uroki_Ucheniki">
           <Key>
@@ -367,10 +418,10 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Uroki_ID" Type="Int32" Nullable="false" />
           <Property Name="Uchenik_ID" Type="Int32" Nullable="false" />
-          <Property Name="Ocenka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ocenka" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Primechanie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ucheniki" Relationship="Self.FK_Uroki_Ucheniki_Ucheniki" FromRole="Uroki_Ucheniki" ToRole="Ucheniki" />
-          <NavigationProperty Name="Uroki" Relationship="Self.FK_Uroki_Ucheniki_Uroki" FromRole="Uroki_Ucheniki" ToRole="Uroki" />
+          <NavigationProperty Name="Ucheniki" Relationship="School10Model.FK_Uroki_Ucheniki_Ucheniki" FromRole="Uroki_Ucheniki" ToRole="Ucheniki" />
+          <NavigationProperty Name="Uroki" Relationship="School10Model.FK_Uroki_Ucheniki_Uroki" FromRole="Uroki_Ucheniki" ToRole="Uroki" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -380,13 +431,13 @@
           <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role_ID" Type="Int32" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
-          <NavigationProperty Name="Teachers" Relationship="Self.FK_Teacher_User" FromRole="User" ToRole="Teacher" />
-          <NavigationProperty Name="Uchenikis" Relationship="Self.FK_Ucheniki_User" FromRole="User" ToRole="Ucheniki" />
+          <NavigationProperty Name="Role" Relationship="School10Model.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Teachers" Relationship="School10Model.FK_Teacher_User" FromRole="User" ToRole="Teacher" />
+          <NavigationProperty Name="Uchenikis" Relationship="School10Model.FK_Ucheniki_User" FromRole="User" ToRole="Ucheniki" />
         </EntityType>
         <Association Name="FK_Klassi_Teacher">
-          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
-          <End Role="Klassi" Type="Self.Klassi" Multiplicity="*" />
+          <End Type="School10Model.Teacher" Role="Teacher" Multiplicity="1" />
+          <End Type="School10Model.Klassi" Role="Klassi" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Teacher">
               <PropertyRef Name="ID_Teacher" />
@@ -397,8 +448,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Ucheniki_Klassi">
-          <End Role="Klassi" Type="Self.Klassi" Multiplicity="1" />
-          <End Role="Ucheniki" Type="Self.Ucheniki" Multiplicity="*" />
+          <End Type="School10Model.Klassi" Role="Klassi" Multiplicity="1" />
+          <End Type="School10Model.Ucheniki" Role="Ucheniki" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Klassi">
               <PropertyRef Name="ID_Klassa" />
@@ -409,8 +460,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Uroki_Klassi">
-          <End Role="Klassi" Type="Self.Klassi" Multiplicity="1" />
-          <End Role="Uroki" Type="Self.Uroki" Multiplicity="*" />
+          <End Type="School10Model.Klassi" Role="Klassi" Multiplicity="1" />
+          <End Type="School10Model.Uroki" Role="Uroki" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Klassi">
               <PropertyRef Name="ID_Klassa" />
@@ -421,8 +472,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Uroki_Predmeti">
-          <End Role="Predmeti" Type="Self.Predmeti" Multiplicity="1" />
-          <End Role="Uroki" Type="Self.Uroki" Multiplicity="*" />
+          <End Type="School10Model.Predmeti" Role="Predmeti" Multiplicity="1" />
+          <End Type="School10Model.Uroki" Role="Uroki" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Predmeti">
               <PropertyRef Name="ID_Predmeta" />
@@ -433,8 +484,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <End Type="School10Model.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="School10Model.User" Role="User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="Role_ID" />
@@ -445,8 +496,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Teacher_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+          <End Type="School10Model.User" Role="User" Multiplicity="0..1" />
+          <End Type="School10Model.Teacher" Role="Teacher" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="User_ID" />
@@ -457,8 +508,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Uroki_Teacher">
-          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
-          <End Role="Uroki" Type="Self.Uroki" Multiplicity="*" />
+          <End Type="School10Model.Teacher" Role="Teacher" Multiplicity="1" />
+          <End Type="School10Model.Uroki" Role="Uroki" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Teacher">
               <PropertyRef Name="ID_Teacher" />
@@ -469,8 +520,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Ucheniki_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Ucheniki" Type="Self.Ucheniki" Multiplicity="*" />
+          <End Type="School10Model.User" Role="User" Multiplicity="1" />
+          <End Type="School10Model.Ucheniki" Role="Ucheniki" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="User_ID" />
@@ -481,8 +532,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Uroki_Ucheniki_Ucheniki">
-          <End Role="Ucheniki" Type="Self.Ucheniki" Multiplicity="1" />
-          <End Role="Uroki_Ucheniki" Type="Self.Uroki_Ucheniki" Multiplicity="*" />
+          <End Type="School10Model.Ucheniki" Role="Ucheniki" Multiplicity="1" />
+          <End Type="School10Model.Uroki_Ucheniki" Role="Uroki_Ucheniki" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ucheniki">
               <PropertyRef Name="Uchenik_ID" />
@@ -493,8 +544,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Uroki_Ucheniki_Uroki">
-          <End Role="Uroki" Type="Self.Uroki" Multiplicity="1" />
-          <End Role="Uroki_Ucheniki" Type="Self.Uroki_Ucheniki" Multiplicity="*" />
+          <End Type="School10Model.Uroki" Role="Uroki" Multiplicity="1" />
+          <End Type="School10Model.Uroki_Ucheniki" Role="Uroki_Ucheniki" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Uroki">
               <PropertyRef Name="ID_Uroka" />
@@ -504,57 +555,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="School10Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Klassis" EntityType="Self.Klassi" />
-          <EntitySet Name="Predmetis" EntityType="Self.Predmeti" />
-          <EntitySet Name="Roles" EntityType="Self.Role" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
-          <EntitySet Name="Uchenikis" EntityType="Self.Ucheniki" />
-          <EntitySet Name="Urokis" EntityType="Self.Uroki" />
-          <EntitySet Name="Uroki_Ucheniki" EntityType="Self.Uroki_Ucheniki" />
-          <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_Klassi_Teacher" Association="Self.FK_Klassi_Teacher">
-            <End Role="Teacher" EntitySet="Teachers" />
-            <End Role="Klassi" EntitySet="Klassis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ucheniki_Klassi" Association="Self.FK_Ucheniki_Klassi">
-            <End Role="Klassi" EntitySet="Klassis" />
-            <End Role="Ucheniki" EntitySet="Uchenikis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Uroki_Klassi" Association="Self.FK_Uroki_Klassi">
-            <End Role="Klassi" EntitySet="Klassis" />
-            <End Role="Uroki" EntitySet="Urokis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Uroki_Predmeti" Association="Self.FK_Uroki_Predmeti">
-            <End Role="Predmeti" EntitySet="Predmetis" />
-            <End Role="Uroki" EntitySet="Urokis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Teacher_User" Association="Self.FK_Teacher_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Teacher" EntitySet="Teachers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Uroki_Teacher" Association="Self.FK_Uroki_Teacher">
-            <End Role="Teacher" EntitySet="Teachers" />
-            <End Role="Uroki" EntitySet="Urokis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ucheniki_User" Association="Self.FK_Ucheniki_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Ucheniki" EntitySet="Uchenikis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Uroki_Ucheniki_Ucheniki" Association="Self.FK_Uroki_Ucheniki_Ucheniki">
-            <End Role="Ucheniki" EntitySet="Uchenikis" />
-            <End Role="Uroki_Ucheniki" EntitySet="Uroki_Ucheniki" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Uroki_Ucheniki_Uroki" Association="Self.FK_Uroki_Ucheniki_Uroki">
-            <End Role="Uroki" EntitySet="Urokis" />
-            <End Role="Uroki_Ucheniki" EntitySet="Uroki_Ucheniki" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -564,101 +564,101 @@
           <EntitySetMapping Name="Klassis">
             <EntityTypeMapping TypeName="School10Model.Klassi">
               <MappingFragment StoreEntitySet="Klassi">
-                <ScalarProperty Name="ID_Klassa" ColumnName="ID_Klassa" />
-                <ScalarProperty Name="god_nach" ColumnName="god_nach" />
-                <ScalarProperty Name="god_Obuch" ColumnName="god_Obuch" />
-                <ScalarProperty Name="Bukva" ColumnName="Bukva" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Rukovoditel_ID" ColumnName="Rukovoditel_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Bukva" ColumnName="Bukva" />
+                <ScalarProperty Name="god_Obuch" ColumnName="god_Obuch" />
+                <ScalarProperty Name="god_nach" ColumnName="god_nach" />
+                <ScalarProperty Name="ID_Klassa" ColumnName="ID_Klassa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Predmetis">
             <EntityTypeMapping TypeName="School10Model.Predmeti">
               <MappingFragment StoreEntitySet="Predmeti">
-                <ScalarProperty Name="ID_Predmeta" ColumnName="ID_Predmeta" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID_Predmeta" ColumnName="ID_Predmeta" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="School10Model.Role">
               <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="School10Model.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Teachers">
             <EntityTypeMapping TypeName="School10Model.Teacher">
               <MappingFragment StoreEntitySet="Teacher">
-                <ScalarProperty Name="ID_Teacher" ColumnName="ID_Teacher" />
-                <ScalarProperty Name="Familia" ColumnName="Familia" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
-                <ScalarProperty Name="Pr_Primechania" ColumnName="Pr_Primechania" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Pr_Primechania" ColumnName="Pr_Primechania" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
+                <ScalarProperty Name="ID_Teacher" ColumnName="ID_Teacher" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Uchenikis">
             <EntityTypeMapping TypeName="School10Model.Ucheniki">
               <MappingFragment StoreEntitySet="Ucheniki">
-                <ScalarProperty Name="Uchenik_ID" ColumnName="Uchenik_ID" />
-                <ScalarProperty Name="Klass_ID" ColumnName="Klass_ID" />
-                <ScalarProperty Name="Familia" ColumnName="Familia" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
-                <ScalarProperty Name="Date_rojden" ColumnName="Date_rojden" />
-                <ScalarProperty Name="Date_Postuplen" ColumnName="Date_Postuplen" />
-                <ScalarProperty Name="Primechania" ColumnName="Primechania" />
-                <ScalarProperty Name="Roditeli" ColumnName="Roditeli" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Roditeli" ColumnName="Roditeli" />
+                <ScalarProperty Name="Primechania" ColumnName="Primechania" />
+                <ScalarProperty Name="Date_Postuplen" ColumnName="Date_Postuplen" />
+                <ScalarProperty Name="Date_rojden" ColumnName="Date_rojden" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
+                <ScalarProperty Name="Klass_ID" ColumnName="Klass_ID" />
+                <ScalarProperty Name="Uchenik_ID" ColumnName="Uchenik_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Urokis">
             <EntityTypeMapping TypeName="School10Model.Uroki">
               <MappingFragment StoreEntitySet="Uroki">
-                <ScalarProperty Name="ID_Uroka" ColumnName="ID_Uroka" />
-                <ScalarProperty Name="Teacher_ID" ColumnName="Teacher_ID" />
-                <ScalarProperty Name="Predmet_ID" ColumnName="Predmet_ID" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Klass_ID" ColumnName="Klass_ID" />
-                <ScalarProperty Name="Thema" ColumnName="Thema" />
                 <ScalarProperty Name="Home_work" ColumnName="Home_work" />
+                <ScalarProperty Name="Thema" ColumnName="Thema" />
+                <ScalarProperty Name="Klass_ID" ColumnName="Klass_ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Predmet_ID" ColumnName="Predmet_ID" />
+                <ScalarProperty Name="Teacher_ID" ColumnName="Teacher_ID" />
+                <ScalarProperty Name="ID_Uroka" ColumnName="ID_Uroka" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Uroki_Ucheniki">
             <EntityTypeMapping TypeName="School10Model.Uroki_Ucheniki">
               <MappingFragment StoreEntitySet="Uroki_Ucheniki">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Uroki_ID" ColumnName="Uroki_ID" />
-                <ScalarProperty Name="Uchenik_ID" ColumnName="Uchenik_ID" />
-                <ScalarProperty Name="Ocenka" ColumnName="Ocenka" />
                 <ScalarProperty Name="Primechanie" ColumnName="Primechanie" />
+                <ScalarProperty Name="Ocenka" ColumnName="Ocenka" />
+                <ScalarProperty Name="Uchenik_ID" ColumnName="Uchenik_ID" />
+                <ScalarProperty Name="Uroki_ID" ColumnName="Uroki_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="School10Model.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

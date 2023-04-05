@@ -4,10 +4,21 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:School_10.Pages"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:entity="clr-namespace:School_10.Entities"
+xmlns:l="clr-namespace:School_10.Commands"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Выставление оценок" Loaded="Page_Loaded">
+    <!--<Page.Resources>
+        <ObjectDataProvider x:Key="dataFromCompanyType" MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="entity:OcenkiType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Page.Resources>-->
 
     <Grid>
         <Grid.RowDefinitions>
@@ -18,7 +29,8 @@
 
         <DataGrid Margin="5" Name="aa" Grid.Row="1" ItemsSource="{Binding Urok, Mode=TwoWay}"  SelectedItem="{Binding SelectedUrok}"
                 AutoGenerateColumns="False"  SelectionMode="Single">
-<i:Interaction.Triggers>
+
+            <i:Interaction.Triggers>
     <i:EventTrigger EventName = "CellEditEnding" >
         <i:InvokeCommandAction  />
     </i:EventTrigger>
@@ -47,7 +59,10 @@
                     </MultiBinding>
                 </DataGridTextColumn.Binding>
                 </DataGridTextColumn>             
-                <DataGridTextColumn Header="Оценка" Binding="{Binding Ocenka, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="*" IsReadOnly="False"/>
+                <DataGridComboBoxColumn Header="Оценка"  ItemsSource="{Binding Source={x:Static l:OcenkiList.ListOcenki}}" 
+SelectedValueBinding="{Binding Ocenka, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="*" IsReadOnly="False">
+                   
+                </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="Домашнее задание" Binding="{Binding Uroki.Home_work}" Width="*" IsReadOnly="False"/>
                 <DataGridTextColumn Header="Примечание" Binding="{Binding Primechanie, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="*" IsReadOnly="False"/>
             </DataGrid.Columns>

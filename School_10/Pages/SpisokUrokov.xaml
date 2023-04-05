@@ -18,8 +18,9 @@
             <DatePicker Style="{StaticResource DatePickerStul}" SelectedDate="{Binding SelectedFirstDate}" Margin="5 0" Width="125"/>
             <TextBlock Text="По" Margin="5 0" VerticalAlignment="Center"/>
             <DatePicker Style="{StaticResource DatePickerStul}" SelectedDate="{Binding SelectedSecondDate}" Margin="5 0" Width="125"/>
-            
+
             <CheckBox Content="Показать сегодняшние уроки" VerticalAlignment="Center" Style="{StaticResource CheckBox1}"/>
+            <Button x:Name="ButtonDabavUrok" Width="150" Height="30" Style="{StaticResource Buttonstule}" Content="Добавить уроок" Click="ButtonDabavUrok_Click" />
         </WrapPanel>
 
         <DataGrid Margin="5" Grid.Row="1" ItemsSource="{Binding UrokiView}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedUrok}"

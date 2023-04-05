@@ -1,4 +1,5 @@
-﻿using School_10.Entities;
+﻿using School_10.Commands;
+using School_10.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -126,5 +127,9 @@ namespace School_10.Pages
             };
         }
 
+        private void ButtonDabavUrok_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddUchniki());
+        }
     }
 }
