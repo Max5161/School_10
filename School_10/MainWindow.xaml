@@ -15,6 +15,16 @@
         <Grid Grid.Row="0" Background="{StaticResource 1}">
             <Button Content="Назад" Name="BtnBack" Click="BtnBack_Click" Height="40" Style="{StaticResource Buttonstule}" Width="80" HorizontalAlignment="Right" Margin="10"/>
             <Image Source="Logo and icon\school_FILL0_wght400_GRAD0_opsz48.png" HorizontalAlignment="Left"></Image>
+            <ToolBar Height="25" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" Margin="0 0 100 0" Foreground="Black">
+
+                <ToggleButton>
+                    <Button Click="Button_Click" >
+                        <Image Source="Logo and icon\Без названия.png" />
+                    </Button>
+                </ToggleButton>
+
+                <TextBox Foreground="LightGray" Width="100">Поиск...</TextBox>
+            </ToolBar>
         </Grid>
         <TextBlock Style="{StaticResource NeglavTextBlock}" Text="{Binding ElementName=FrameMain, Path=Content.Title}" HorizontalAlignment="Center"></TextBlock>
         <Frame x:Name="FrameMain" NavigationUIVisibility="Hidden" Grid.Row="1" />

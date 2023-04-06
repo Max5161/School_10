@@ -1,4 +1,5 @@
 ﻿using School_10.Entities;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -33,15 +34,18 @@ namespace School_10.Pages
 
         private void ButtonSaveUrok_Click(object sender, RoutedEventArgs e)
         {
-            //Urok.Teacher = (Teacher)Cbox_FIO_Teacher.SelectedValue;
-            //Urok.Predmeti = (Predmeti)CboxIDPredmeta.SelectedValue;
-            //Urok.Klassi = (Klassi)CboxIDKlassa.SelectedValue;
-            //Urok.Thema = TboxThema.Text;
+            try 
+            {
+                      App.Context.Urokis.Add(Urok);
+                App.Context.SaveChanges();
 
-            App.Context.Urokis.Add(Urok);
-            App.Context.SaveChanges();
-
-            NavigationService.GoBack();
+                NavigationService.GoBack();
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 

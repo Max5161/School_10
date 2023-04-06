@@ -34,7 +34,7 @@ namespace School_10.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Urok = App.Context.Uroki_Ucheniki.Where(p => p.Uroki.ID_Uroka == predmet.ID_Uroka).ToList();
+            Urok = App.Context.Uroki_Ucheniki.Where(p => p.Uroki.ID_Uroka == predmet.ID_Uroka).Include("Uroki").ToList();
         }
 
 

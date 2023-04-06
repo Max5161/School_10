@@ -1,4 +1,5 @@
 ﻿using School_10.Entities;
+using School_10.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,11 @@ namespace School_10
         {
             if (FrameMain.CanGoBack)
                 FrameMain.GoBack();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FrameMain.Navigate(new AddShkila());
         }
     }
 }
