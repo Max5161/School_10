@@ -20,17 +20,21 @@
             <DatePicker Style="{StaticResource DatePickerStul}" SelectedDate="{Binding SelectedSecondDate}" Margin="5 0" Width="125"/>
 
             <CheckBox Content="Показать сегодняшние уроки" VerticalAlignment="Center" Style="{StaticResource CheckBox1}"/>
-            <Button x:Name="ButtonDabavUrok" Width="150" Height="30" Style="{StaticResource Buttonstule}" Content="Добавить уроок" Click="ButtonDabavUrok_Click" />
+            <Button x:Name="ButtonDabavUrok" Width="150" Height="30" Visibility="{Binding VisibilityAdmin}" Style="{StaticResource Buttonstule}" Content="Добавить уроок" Click="ButtonDabavUrok_Click"/>
+            <Button x:Name="ButtonDabavUchenik" Width="150" Height="30" Visibility="{Binding VisibilityAdmin}" Style="{StaticResource Buttonstule}" Content="Добавить ученика" Margin="5 0" Click="ButtonDabavUchenik_Click"/>
         </WrapPanel>
 
         <DataGrid Margin="5" Grid.Row="1" ItemsSource="{Binding UrokiView}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedUrok}"
                 IsReadOnly="True" SelectionMode="Single">
-        <DataGrid.Resources>
+        <DataGrid.Resources> 
             <ContextMenu x:Key="CtxMenu">
                 <MenuItem Header="Поставить оценки" 
                     Command="{Binding Path=DataContext.OpenUrokCmd, 
                     RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
-            </ContextMenu>
+                    <MenuItem Header="Удалить" Visibility="{Binding Path=DataContext.VisibilityAdmin,  RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
+                    Command="{Binding Path=DataContext.DeleteUrokCmd, 
+                    RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                </ContextMenu>
         </DataGrid.Resources>
         <DataGrid.RowStyle>
             <Style TargetType="DataGridRow">

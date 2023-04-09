@@ -14,9 +14,6 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Grid.Row="3" HorizontalAlignment="Right"
-                Name="BntSave" Click="BntSave_Click"
-                Content="Сохранить" Style="{StaticResource Buttonstule}"></Button>
         <StackPanel Orientation="Horizontal">
             <TextBox x:Name="TboxSerch" Width="150" Margin="5" Style="{StaticResource TextboxStul}" TextChanged="TboxSerch_TextChanged" ></TextBox>
         </StackPanel>
@@ -33,10 +30,11 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
 
-                    <DataGridTextColumn Header="Предмет" Binding="{Binding Uroki.Predmeti.Name}" Width="*"/>
+                <DataGridTextColumn Header="Предмет" Binding="{Binding Uroki.Predmeti.Name}" Width="*"/>
+                <DataGridTextColumn Header="Оценка" Binding="{Binding Ocenka}" Width="*"/>
                 <DataGridTextColumn Header="Дата" Binding="{Binding Uroki.Date}"  Width="*"/>
                 <DataGridTextColumn Header="Класс" Binding="{Binding Uroki.Klassi.Name}"  Width="*"/>
-                    <DataGridTextColumn Header="Тема урока" Binding="{Binding Uroki.Thema}"  Width="*"/>
+                <DataGridTextColumn Header="Тема урока" Binding="{Binding Uroki.Thema}"  Width="*"/>
                 <DataGridTextColumn Header="Домашнее задание" Binding="{Binding Uroki.Home_work}"  Width="*"/>
 
             </DataGrid.Columns>

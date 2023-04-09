@@ -36,7 +36,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock   Height="30" Text="Дата урока" Margin="5" Style="{StaticResource TBStul}"/>
-                        <TextBox   Width="150" Height="30" x:Name="TboxDate" Margin="5" Text="{Binding Urok.Date, StringFormat={}{0:dd.MM.yyyy}, Mode=TwoWay}"/>
+                        <TextBox   Width="150" Height="30" x:Name="TboxDate" Margin="5" Text="{Binding Urok.Date, StringFormat={}{0:dd.MM.yyyy}, ConverterCulture=ru-RU, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock  Height="30" Text="Класс" Margin="5" Style="{StaticResource TBStul}"/>

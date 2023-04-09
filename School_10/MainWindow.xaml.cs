@@ -1,6 +1,7 @@
 ﻿using School_10.Entities;
 using School_10.Pages;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,6 +38,13 @@ namespace School_10
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             FrameMain.Navigate(new AddShkila());
+
+            
+        }
+
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -3,8 +3,10 @@ using School_10.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -47,6 +49,9 @@ namespace School_10.Pages
             } 
         }
 
+        private string visibilityAdmin  = "Collapsed";
+        public string VisibilityAdmin { get => visibilityAdmin; set => Set(ref visibilityAdmin, value); }
+
         private CollectionViewSource urokiViewSource;
         public ICollectionView UrokiView => urokiViewSource?.View;
 
@@ -67,11 +72,29 @@ namespace School_10.Pages
         private RelayCommand openUrokCmd;
         public RelayCommand OpenUrokCmd => openUrokCmd ?? (openUrokCmd = new RelayCommand(obj => OpenVistavlenieUrok()));
 
+        private RelayCommand deleteUrokCmd;
+        public RelayCommand DeleteUrokCmd => deleteUrokCmd ?? (deleteUrokCmd = new RelayCommand(obj => RemoveUrok(SelectedUrok)));
+        private void RemoveUrok(Uroki urok)
+        {
+            if (urok is null) return;
+
+
+            using (var db = new School10Entities())
+            {
+                // db.Urokis.Remove(urok);
+                db.Urokis.Attach(urok);
+                db.Entry(urok).State = EntityState.Deleted;
+                db.SaveChanges();
+            }
+            urokiViewSource.View.Refresh();
+        }
+
 
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             if(user.Role_ID == 3)
             {
+                VisibilityAdmin = "Visible";
                 using (var db = new School10Entities())
                 {
                     Urokis = db.Urokis.Include("Predmeti").Include("Teacher").Include("Klassi").ToList();
@@ -79,6 +102,7 @@ namespace School_10.Pages
             }
             if (user.Role_ID == 1)
             {
+                VisibilityAdmin = "Collapsed";
                 using (var db = new School10Entities())
                 {
                     Urokis = db.Urokis.Include("Predmeti").Include("Teacher").Include("Klassi").Where(p => p.Teacher.User_ID == user.User_ID).ToList();
@@ -111,9 +135,6 @@ namespace School_10.Pages
             NavigationService.Navigate(new VistavlenOcenok(SelectedUrok));
         }
 
-
-
-
         // Фильтр по датам
         private void OnDateFilter(object sender, FilterEventArgs e)
         {
@@ -131,5 +152,11 @@ namespace School_10.Pages
         {
             NavigationService.Navigate(new AddUchniki());
         }
+
+        private void ButtonDabavUchenik_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddShkila());
+        }
     }
+    
 }

@@ -34,7 +34,8 @@ namespace School_10.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Urok = App.Context.Uroki_Ucheniki.Where(p => p.Uroki.ID_Uroka == predmet.ID_Uroka).Include("Uroki").ToList();
+             Urok = App.Context.Uroki_Ucheniki.Where(p => p.Uroki.ID_Uroka == predmet.ID_Uroka).Include("Uroki").ToList();
+
         }
 
 
@@ -71,7 +72,20 @@ namespace School_10.Pages
                     App.Context.Entry(SelectedUrok).State = EntityState.Modified;
                     App.Context.SaveChanges();
                 }
+
             }
+        }
+        private void UpdateSerch()
+        {
+            var Shkola = App.Context.Uroki_Ucheniki.Where(p => p.Uroki.ID_Uroka == predmet.ID_Uroka).Include("Uroki").ToList();
+
+            // Поиск по ФИО
+            Shkola = Shkola.Where(p => p.Ucheniki.Familia.ToLower().Contains(TboxSerch1.Text.ToLower())
+         || p.Ucheniki.Name.ToLower().Contains(TboxSerch1.Text.ToLower())
+         || p.Ucheniki.Otchestvo.ToLower().Contains(TboxSerch1.Text.ToLower())
+         ).ToList();
+
+            Urok = Shkola;
         }
 
         #region INPC
@@ -92,5 +106,9 @@ namespace School_10.Pages
 
         #endregion
 
+        private void TboxSerch1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateSerch();
+        }
     }
 }

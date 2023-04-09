@@ -1,5 +1,6 @@
 ﻿using School_10.Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -36,20 +37,29 @@ namespace School_10.Pages
         {
             try 
             {
-                      App.Context.Urokis.Add(Urok);
+                App.Context.Urokis.Add(Urok);
+
+
+                var ucheniki = App.Context.Uchenikis.Where(p => p.Klass_ID == Urok.Klass_ID).ToList();
+
+                var urokUchenik = new List<Uroki_Ucheniki>();
+                foreach (var item in ucheniki)
+                {
+                    urokUchenik.Add(new Uroki_Ucheniki { Uroki_ID = Urok.ID_Uroka, Uchenik_ID = item.Uchenik_ID });
+                }
+
+                App.Context.Uroki_Ucheniki.AddRange(urokUchenik);
+
                 App.Context.SaveChanges();
 
                 NavigationService.GoBack();
-                
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
-
-
-
         #region INPC
 
         public event PropertyChangedEventHandler PropertyChanged;
