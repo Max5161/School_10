@@ -43,17 +43,32 @@ namespace School_10.Pages
                     };
 
                     urokiViewSource.Filter += new FilterEventHandler(OnDateFilter);
+                    urokiViewSource.Filter += TodayOnlyFilter;
+
                     urokiViewSource.View.Refresh();
                     OnPropertyChanged(nameof(UrokiView));
                 } 
             } 
         }
 
+        private void TodayOnlyFilter(object sender, FilterEventArgs e)
+        {
+            if (TodayOnly != true) return;
+            if (e.Item is Uroki urokit == false) return;
+
+            if (urokit.Date != DateTime.Now.Date)
+                e.Accepted = false;
+        }
+
         private string visibilityAdmin  = "Collapsed";
-        public string VisibilityAdmin { get => visibilityAdmin; set => Set(ref visibilityAdmin, value); }
+        public string VisibilityAdmin { get => visibilityAdmin; set { Set(ref visibilityAdmin, value); } }
 
         private CollectionViewSource urokiViewSource;
         public ICollectionView UrokiView => urokiViewSource?.View;
+
+        // 
+        private bool todayOnly;
+        public bool TodayOnly { get => todayOnly; set { if (Set(ref todayOnly, value)) urokiViewSource?.View.Refresh(); } }
 
 
         // Выбранный урок
