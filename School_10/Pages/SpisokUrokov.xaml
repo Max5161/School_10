@@ -20,7 +20,7 @@
             <DatePicker Style="{StaticResource DatePickerStul}" SelectedDate="{Binding SelectedSecondDate}" Margin="5 0" Width="125"/>
 
             <CheckBox Content="Показать сегодняшние уроки" VerticalAlignment="Center" Style="{StaticResource CheckBox1}"/>
-            <Button x:Name="ButtonDabavUrok" Width="150" Height="30" Visibility="{Binding VisibilityAdmin}" Style="{StaticResource Buttonstule}" Content="Добавить урок" Click="ButtonDabavUrok_Click"/>
+            <Button x:Name="ButtonDabavUrok" Width="150" Height="30" Visibility="{Binding VisibilityAdmin}" Style="{StaticResource Buttonstule}" Content="Добавить уроок" Click="ButtonDabavUrok_Click"/>
             <Button x:Name="ButtonDabavUchenik" Width="150" Height="30" Visibility="{Binding VisibilityAdmin}" Style="{StaticResource Buttonstule}" Content="Добавить ученика" Margin="5 0" Click="ButtonDabavUchenik_Click"/>
         </WrapPanel>
 
